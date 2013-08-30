@@ -35,7 +35,6 @@ PUT /project/<project id> - update all info in place. If enough info start
 update job
 POST /project<project id>/item - add item to be created to project
 GET /project/<project id>/item - get all items in project
-PATCH /project/<project id>/item/<item id> - modify item (likely ME/PE/amount)
 
 POST /apikey - create an api key object
 GET /apikey - list api key objects
@@ -47,7 +46,6 @@ POST /blueprint - create blueprint
 GET /blueprint - list blueprint
 
 GET /blueprint/<blueprint id> - get extra blueprint info
-PATCH /blueprint/<blueprint id> - modify blueprint data (probably ME/PE)
 PUT /blueprint/<blueprint id> - update blueprint data inplace
 DELETE /blueprint/<blueprint id> - delete blueprint
 
@@ -72,10 +70,8 @@ POST /contract - create a contract object (DOES NOT create a line item. Don't
 know how to split any isk across the items in the contract)
 
 GET /contract - get all contract objects
-POST /contract/<contract id> - create line items for item:amount pair in post
+POST /contract/<contract id>/update_values - create/update line items for item:amount pair in post
 data. Must total to total isk on contract
-PATCH /contract/<contract id> - update item:amount pairs, This will cascade
-the update into the lineitems.
 
 
 

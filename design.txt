@@ -1,0 +1,81 @@
+indy site api
+
+Projects
+===========
+I want to build X items, queued job will calculate the required materials
+based on BPOs / guessed at BPC costs/ME.
+
+API Keys
+=========
+Just have them avail. Queued jobs will hit them all. Will create contract/indy
+job / market purchases
+
+Blueprints
+========
+Will be used to find out what you can make / numbers of minerals based on min
+ME on your blueprints for a given part. i.e. you have 4 Capital Drone Bay
+BPOs. Minerals usage will be based on lowest Drone Bay BPO ME
+
+Indy Jobs
+=========
+Pulled from api. Can be assigned to a project
+
+Line Items
+=======
+These are essentially item:isk associations. Market orders are easy
+Contracts need manual interventions as we don't know how to split the isk
+between items in all cases. Thus the lineitem concept
+
+POST /project - create; if enough info start update job
+GET /project - get all projects
+
+GET /project/<project id> - get cached info
+DELETE /project/<project id> - delete project and any jobs
+PUT /project/<project id> - update all info in place. If enough info start
+update job
+POST /project<project id>/item - add item to be created to project
+GET /project/<project id>/item - get all items in project
+PATCH /project/<project id>/item/<item id> - modify item (likely ME/PE/amount)
+
+POST /apikey - create an api key object
+GET /apikey - list api key objects
+
+GET /apikey/<apikey id>
+DELETE /apikey/<apikey id> - delete api key
+
+POST /blueprint - create blueprint
+GET /blueprint - list blueprint
+
+GET /blueprint/<blueprint id> - get extra blueprint info
+PATCH /blueprint/<blueprint id> - modify blueprint data (probably ME/PE)
+PUT /blueprint/<blueprint id> - update blueprint data inplace
+DELETE /blueprint/<blueprint id> - delete blueprint
+
+POST /indyjobs - create an indy job (should be called by api update)
+GET /indyjobs - list all cached indy jobs
+GET /indyjob/<indyjob id> - show extra info about job
+DELETE /indyjob/<indyjob id> - delete job
+POST /indyjob/<indyjob id>/associate/<project id>
+POST /indyjob/<indyjob id>/release - release a lineitem from a project
+
+GET /lineitem/by_item/<item name> - get lineitems that contain an item
+POST /lineitem/<lineitem id>/associate/<project id> - associate a
+transaction with a project
+POST /lineitem/<lineitem id>/release - release a lineitem from a project
+
+POST /marketorder - create a market order (this will create a line item, used
+for manual override and by job runner to pull from API)
+
+GET /marketorder/by_item/<item name> - get marketorders for a given item
+
+POST /contract - create a contract object (DOES NOT create a line item. Don't
+know how to split any isk across the items in the contract)
+
+GET /contract - get all contract objects
+POST /contract/<contract id> - create line items for item:amount pair in post
+data. Must total to total isk on contract
+PATCH /contract/<contract id> - update item:amount pairs, This will cascade
+the update into the lineitems.
+
+
+
